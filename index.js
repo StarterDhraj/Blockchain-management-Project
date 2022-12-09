@@ -22,7 +22,7 @@ useNewUrlParser:true,
     console.log(err.massage);
 })
 
-app.use("/",cryptoRouter);
+app.use("/crypto",cryptoRouter);
 // const  PORT = 3000;
 
 app.listen(process.env.PORT||3000 , function(){

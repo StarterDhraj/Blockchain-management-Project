@@ -1,5 +1,5 @@
 const cryptoRouter = require("express").Router();
-// const { response } = require("express");
+
 const {getinfo} = require("../controller/cryptoController");
 const{Crypto} = require("../model/bitModel")
 
@@ -14,11 +14,19 @@ const{Crypto} = require("../model/bitModel")
             {upsert:true,new:true}
         )
     })
-    Promise.all(promises).then((data)=>{ //all pending code catch promise.all
+    Promise.all(promises).then((data)=>{ 
+
+        Crypto.deleteMany({
+            _id: {
+              $nin: data.map((i) => i._id),
+            },
+          }).then(console.log);
+        
+//all pending code catch promise.all
         response.status(200).json({data})
     })
 
  })
-// module.exports = route
+
 
 module.exports = {cryptoRouter}
